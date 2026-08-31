@@ -2,20 +2,21 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useApp } from '../../state/store'
 import { TopUtilityBar, LocationBar, SearchBar } from '../../components/TopBars'
 import ItemCard from '../../components/ItemCard'
-import { OCCASIONS, REGULAR_MENU, TIFFINX_MENU, getItemById, NUDGES } from '../../data/mockData'
+import { OCCASIONS, REGULAR_MENU, TIFFINX_MENU, getItemById, NUDGES, BRAND_DISCLAIMER } from '../../data/mockData'
 import TiffinXInfoModal from './TiffinXInfoModal'
+import BBDBanner from '../../components/BBDBanner'
 
 const LOOKING_FOR = [
-  { id: 'm1', label: 'Paneer', icon: '🍛' },
-  { id: 'm5', label: 'Pizza', icon: '🍕' },
-  { id: 'm9', label: 'Burger', icon: '🍔' },
+  { id: 'm1', label: 'Subway', icon: '🥪' },
+  { id: 'm3', label: 'Burger', icon: '🍔' },
+  { id: 'm5', label: 'Tacos', icon: '🌮' },
+  { id: 'm7', label: 'Momos', icon: '🥟' },
+  { id: 'm9', label: 'Burrito', icon: '🌯' },
   { id: 't2', label: 'Coffee', icon: '☕' },
-  { id: 'm2', label: 'Biryani', icon: '🍚' },
-  { id: 'm8', label: 'Desserts', icon: '🍮' },
 ]
 
 export default function CustomerHome() {
-  const { foodMode, setFoodMode, occasion, userName, push, pushToast } = useApp()
+  const { foodMode, setFoodMode, occasion, userName, push, pushToast, fireMarketingNudge } = useApp()
   const [showInfo, setShowInfo] = useState(false)
   const occ = OCCASIONS[occasion]
   const menu = foodMode === 'tiffinx' ? TIFFINX_MENU : REGULAR_MENU
@@ -35,11 +36,18 @@ export default function CustomerHome() {
     return () => clearTimeout(t)
   }, [occasion])
 
+  useEffect(() => {
+    const iv = setInterval(() => fireMarketingNudge(), 40000)
+    return () => clearInterval(iv)
+  }, [fireMarketingNudge])
+
   return (
     <div>
       <TopUtilityBar />
       <LocationBar />
       <SearchBar placeholder={foodMode === 'tiffinx' ? 'Search TiffinX <20-min menu' : 'Search for restaurants and food'} />
+
+      <BBDBanner />
 
       <div className="hero-banner" style={{ background: occ.banner.gradient }}>
         <div className="hb-deco">{foodMode === 'tiffinx' ? '⚡' : '🍽️'}</div>
@@ -118,6 +126,8 @@ export default function CustomerHome() {
           <ItemCard key={item.id} item={item} />
         ))}
       </div>
+
+      <div className="brand-disclaimer">ℹ️ {BRAND_DISCLAIMER}</div>
 
       {showInfo && <TiffinXInfoModal onClose={() => setShowInfo(false)} />}
     </div>

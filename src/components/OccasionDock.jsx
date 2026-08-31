@@ -3,7 +3,7 @@ import { useApp } from '../state/store'
 import { OCCASIONS } from '../data/mockData'
 
 export default function OccasionDock() {
-  const { occasion, setOccasion, customerTab } = useApp()
+  const { occasion, setOccasion, customerTab, fireMarketingNudge } = useApp()
   const [open, setOpen] = useState(false)
 
   if (customerTab !== 'home') return null
@@ -25,6 +25,15 @@ export default function OccasionDock() {
               {o.label}
             </button>
           ))}
+          <div className="op-title" style={{ marginTop: 6, borderTop: '1px solid #f0f0f0', paddingTop: 10 }}>Demo: Marketing Push</div>
+          <button
+            onClick={() => {
+              fireMarketingNudge()
+              setOpen(false)
+            }}
+          >
+            🔔 Simulate Notification
+          </button>
         </div>
       )}
       <button className="occasion-fab" onClick={() => setOpen((v) => !v)} title="Demo: set context">

@@ -1,9 +1,10 @@
 import React from 'react'
 import { useApp } from '../../state/store'
 import { ScreenHeader } from '../../components/TopBars'
+import { isAllTiffinX, computeDeliveryFee, computeBBDDiscount, PLATFORM_FEE } from '../../utils/billing'
 
 export default function Cart() {
-  const { cartItems, cartTotal, addToCart, push, goTab } = useApp()
+  const { cartItems, cartTotal, addToCart, push, goTab, bbdApplied, orders } = useApp()
 
   if (cartItems.length === 0) {
     return (
@@ -19,10 +20,11 @@ export default function Cart() {
     )
   }
 
-  const allTiffinX = cartItems.every(({ item }) => item.certified)
-  const deliveryFee = allTiffinX ? 0 : cartTotal > 199 ? 0 : 25
-  const platformFee = 4
-  const total = cartTotal + deliveryFee + platformFee
+  const allTiffinX = isAllTiffinX(cartItems)
+  const deliveryFee = computeDeliveryFee('delivery', allTiffinX, cartTotal)
+  const platformFee = PLATFORM_FEE
+  const bbdDiscount = computeBBDDiscount(cartItems, bbdApplied, orders.length === 0)
+  const total = cartTotal + deliveryFee + platformFee - bbdDiscount
 
   return (
     <div>
@@ -56,6 +58,9 @@ export default function Cart() {
           <span className={deliveryFee === 0 ? 'free' : ''}>{deliveryFee === 0 ? 'FREE' : `₹${deliveryFee}`}</span>
         </div>
         <div className="bill-row"><span className="muted">Platform Fee</span><span>₹{platformFee}</span></div>
+        {bbdDiscount > 0 && (
+          <div className="bill-row"><span className="muted">🛍️ BBD ₹1 Tasting Offer</span><span className="free">− ₹{bbdDiscount}</span></div>
+        )}
         <div className="bill-row total"><span>To Pay</span><span>₹{total}</span></div>
       </div>
 

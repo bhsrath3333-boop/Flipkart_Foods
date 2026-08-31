@@ -175,6 +175,41 @@
   transition: width 0.8s ease;
 }
 
+.slot-breakdown {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+  overflow-x: auto;
+}
+
+.slot-breakdown-item {
+  flex: 1;
+  min-width: 54px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 8px;
+  text-align: center;
+  padding: 6px 2px;
+  border: 1px solid transparent;
+}
+
+.slot-breakdown-item.peak {
+  background: white;
+  border-color: var(--rp-accent);
+}
+
+.slot-breakdown-item .sbi-count {
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--rp-accent-dark);
+}
+
+.slot-breakdown-item .sbi-label {
+  font-size: 8px;
+  color: #a86200;
+  font-weight: 600;
+  margin-top: 1px;
+}
+
 /* capacity traffic light */
 .capacity-box {
   display: flex;

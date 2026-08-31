@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react'
-import { getItemById } from '../data/mockData'
+import { getItemById, MARKETING_NUDGES, PRE_ORDER_BASE_COUNTS } from '../data/mockData'
 
 const AppCtx = createContext(null)
 
@@ -7,6 +7,14 @@ const REFERRAL_CODE = 'RAHUL50X'
 
 function genOrderId() {
   return 'FKF' + Math.floor(100000 + Math.random() * 900000)
+}
+
+function genTableNumber() {
+  return 'T' + Math.floor(10 + Math.random() * 89)
+}
+
+function genPickupCode() {
+  return 'PK' + Math.floor(1000 + Math.random() * 9000)
 }
 
 export function AppProvider({ children }) {
@@ -33,7 +41,15 @@ export function AppProvider({ children }) {
   const [onboarded, setOnboarded] = useState(false)
   const [userName] = useState('Rahul')
 
+  // Big Billion Days takeover: tapping the banner unlocks a ₹1 first-order discount
+  const [bbdApplied, setBbdApplied] = useState(false)
+
+  // Pre-order counts per slot — customer pre-orders feed directly into the
+  // Restaurant View's live demand panel, seeded from mock historical baselines.
+  const [preOrderCounts, setPreOrderCounts] = useState({ ...PRE_ORDER_BASE_COUNTS })
+
   const toastTimer = useRef(0)
+  const nudgeIndexRef = useRef(0)
 
   const pushToast = useCallback((title, body, tone = 'info') => {
     const id = ++toastTimer.current + '-' + Date.now()
@@ -46,6 +62,24 @@ export function AppProvider({ children }) {
   const dismissToast = useCallback((id) => {
     setToasts((t) => t.filter((x) => x.id !== id))
   }, [])
+
+  const fireMarketingNudge = useCallback(() => {
+    const n = MARKETING_NUDGES[nudgeIndexRef.current % MARKETING_NUDGES.length]
+    nudgeIndexRef.current += 1
+    pushToast(n.title, n.body, 'info')
+  }, [pushToast])
+
+  const applyBBD = useCallback(() => {
+    setBbdApplied(true)
+    pushToast('₹1 Tasting Unlocked! 🛍️', 'Add any TiffinX item — it drops to ₹1 at checkout on your first order.', 'success')
+  }, [pushToast])
+
+  const addPreOrder = useCallback(
+    (slot) => {
+      setPreOrderCounts((c) => ({ ...c, [slot]: (c[slot] || 0) + 1 }))
+    },
+    []
+  )
 
   const push = useCallback((screen, params = {}) => {
     setStack((s) => [...s, { screen, params }])
@@ -90,23 +124,43 @@ export function AppProvider({ children }) {
   const cartCount = useMemo(() => Object.values(cart).reduce((a, b) => a + b, 0), [cart])
 
   const placeOrder = useCallback(
-    ({ isTiffinX, total }) => {
+    ({ isTiffinX, total, fulfillment = 'delivery', scheduled = false, slot = null, bbdDiscount = 0 }) => {
       const id = genOrderId()
       const etaMinutes = isTiffinX ? 20 : 40
+      const isLiveDelivery = fulfillment === 'delivery' && !scheduled
       const order = {
         id,
         items: cartItems.map(({ item, qty }) => ({ name: item.name, qty, price: item.price })),
         total,
         isTiffinX,
+        fulfillment,
+        scheduled,
+        slot,
+        bbdDiscount,
+        tableNumber: fulfillment === 'dineIn' ? genTableNumber() : null,
+        pickupCode: fulfillment === 'takeaway' ? genPickupCode() : null,
         placedAt: Date.now(),
-        etaSeconds: etaMinutes * 60,
-        status: 'placed',
+        etaSeconds: isLiveDelivery ? etaMinutes * 60 : 0,
+        status: isLiveDelivery ? 'placed' : 'confirmed',
       }
       setOrders((o) => [order, ...o])
       clearCart()
+
+      if (scheduled && slot) {
+        addPreOrder(slot)
+      }
+
+      // Orders that don't go through the live delivery countdown (dine-in,
+      // takeaway, or anything scheduled for later) credit SuperCoins right away.
+      if (!isLiveDelivery) {
+        const earned = 15
+        setCoins((c) => c + earned)
+        pushToast('SuperCoins earned! 🪙', `+${earned} coins credited for your order.`, 'success')
+      }
+
       return order
     },
-    [cartItems, clearCart]
+    [cartItems, clearCart, addPreOrder, pushToast]
   )
 
   const completeOrder = useCallback(
@@ -158,6 +212,11 @@ export function AppProvider({ children }) {
     userName,
     referralCode: REFERRAL_CODE,
     applyReferral,
+    bbdApplied,
+    applyBBD,
+    preOrderCounts,
+    addPreOrder,
+    fireMarketingNudge,
   }
 
   return <AppCtx.Provider value={value}>{children}</AppCtx.Provider>

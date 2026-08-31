@@ -274,6 +274,94 @@
 .modal-sheet h2 { margin: 0 0 4px; font-size: 17px; }
 .modal-sheet .modal-close { position: absolute; top: 14px; right: 16px; background: #f0f0f0; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 14px; }
 
+/* ---------- Center modal variant (nutrition popover, small dialogs) ---------- */
+.modal-overlay.center {
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.nutrition-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  width: 100%;
+  max-width: 260px;
+  position: relative;
+  box-shadow: var(--shadow-pop);
+  animation: sheet-up 0.25s cubic-bezier(.4,0,.2,1);
+}
+
+.nutrition-grid {
+  display: flex;
+  justify-content: space-around;
+  gap: 8px;
+}
+
+.nutrition-stat {
+  flex: 1;
+  text-align: center;
+  background: #f6f8fb;
+  border-radius: 10px;
+  padding: 10px 4px;
+}
+
+.nutrition-stat .ns-val { font-weight: 800; font-size: 15px; color: var(--fk-blue); }
+.nutrition-stat .ns-label { font-size: 9.5px; color: var(--fk-text-muted); margin-top: 2px; }
+
+.nutrition-accordion {
+  margin-top: 14px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #fafbff;
+}
+
+.nutrition-accordion-head {
+  width: 100%;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 12.5px;
+  padding: 0;
+  color: var(--fk-text);
+}
+
+.nutrition-tag {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 10px;
+  font-weight: 700;
+  color: #2e7d32;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 4px;
+}
+
+/* ---------- Brand badge (illustrative demo restaurant chains) ---------- */
+.brand-badge {
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.brand-disclaimer {
+  font-size: 9px;
+  color: #aaa;
+  text-align: center;
+  padding: 10px 24px 4px;
+  line-height: 1.4;
+}
+
 .step-explain {
   display: flex;
   gap: 12px;
@@ -347,6 +435,66 @@
 .ob-id-preview .obp-meta { font-size: 10.5px; color: var(--fk-text-muted); }
 
 .ob-skip { text-align: center; margin-top: 16px; font-size: 12px; opacity: 0.85; text-decoration: underline; background:none; border:none; color:white; }
+
+/* ---------- Checkout: fulfillment / pre-order controls ---------- */
+.btn-secondary.timing-active {
+  background: var(--fk-blue);
+  color: white;
+  border-color: var(--fk-blue);
+}
+
+.slot-chip {
+  flex: 0 0 auto;
+  background: white;
+  border: 1.5px solid #ddd;
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fk-text);
+  margin-right: 8px;
+}
+
+.slot-chip.active {
+  background: var(--fk-blue);
+  border-color: var(--fk-blue);
+  color: white;
+}
+
+/* ---------- Fake QR code (dine-in check-in) ---------- */
+.fake-qr {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 2px;
+  width: 144px;
+  height: 144px;
+  margin: 0 auto;
+  padding: 10px;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+
+.fake-qr .cell {
+  background: #1a1a1a;
+  border-radius: 1px;
+}
+
+.fake-qr .cell.off {
+  background: transparent;
+}
+
+/* ---------- Confirmation cards (dine-in / takeaway / scheduled) ---------- */
+.confirm-icon-circle {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  margin: 0 auto 16px;
+}
 
 /* ---------- Account screen ---------- */
 .account-row {
