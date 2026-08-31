@@ -257,6 +257,27 @@ button {
   opacity: 0.18;
 }
 
+.hero-banner-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.55) 100%);
+  z-index: 1;
+}
+
+.hero-banner > *:not(.hero-banner-bg):not(.hero-banner-overlay) {
+  position: relative;
+  z-index: 2;
+}
+
 /* ---------- Big Billion Days takeover banner ---------- */
 .bbd-banner {
   margin: 12px;
