@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
 import { useApp } from '../../state/store'
 import { ScreenHeader } from '../../components/TopBars'
-import { getItemById } from '../../data/mockData'
+import { getItemById, NUTRITION } from '../../data/mockData'
 import TiffinXInfoModal from './TiffinXInfoModal'
+import BrandBadge from '../../components/BrandBadge'
 
 export default function ItemDetail({ id }) {
   const { cart, addToCart, push } = useApp()
   const [showInfo, setShowInfo] = useState(false)
+  const [showNutrition, setShowNutrition] = useState(false)
   const item = getItemById(id)
   if (!item) return null
   const qty = cart[id] || 0
   const isTx = !!item.certified
+  const n = NUTRITION[item.id]
 
   return (
     <div style={{ position: 'relative', minHeight: '100%' }}>
@@ -21,7 +24,10 @@ export default function ItemDetail({ id }) {
       </div>
       <div className="detail-body">
         <h2>{item.name}</h2>
-        <div className="detail-restaurant">by {item.restaurant} · {item.rating} ★</div>
+        <div className="detail-restaurant" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <BrandBadge name={item.restaurant} size={18} />
+          by {item.restaurant} · {item.rating} ★
+        </div>
 
         <div className="detail-price-row">
           <span className="detail-price">₹{item.price}</span>
@@ -49,6 +55,31 @@ export default function ItemDetail({ id }) {
           <button className="info-link-btn" onClick={() => setShowInfo(true)}>
             Why is TiffinX this fast? →
           </button>
+        )}
+
+        {n && (
+          <div className="nutrition-accordion">
+            <button className="nutrition-accordion-head" onClick={() => setShowNutrition((v) => !v)}>
+              <span>🍎 Nutrition Info</span>
+              <span>{showNutrition ? '▲' : '▼'}</span>
+            </button>
+            {showNutrition && (
+              <div className="nutrition-grid" style={{ marginTop: 10 }}>
+                <div className="nutrition-stat">
+                  <div className="ns-val">{n.cal}</div>
+                  <div className="ns-label">Calories</div>
+                </div>
+                <div className="nutrition-stat">
+                  <div className="ns-val">{n.protein}g</div>
+                  <div className="ns-label">Protein</div>
+                </div>
+                <div className="nutrition-stat">
+                  <div className="ns-val">{n.carbs}g</div>
+                  <div className="ns-label">Carbs</div>
+                </div>
+              </div>
+            )}
+          </div>
         )}
 
         <p style={{ fontSize: 12.5, color: '#616161', lineHeight: 1.6, marginTop: 16 }}>

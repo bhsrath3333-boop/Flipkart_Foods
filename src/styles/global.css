@@ -257,6 +257,76 @@ button {
   opacity: 0.18;
 }
 
+/* ---------- Big Billion Days takeover banner ---------- */
+.bbd-banner {
+  margin: 12px;
+  border-radius: var(--radius-lg);
+  padding: 20px 16px 18px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background: linear-gradient(120deg, #FFE11B 0%, #FFC107 45%, #2874F0 45%, #1a56c9 100%);
+  box-shadow: 0 6px 18px rgba(40,116,240,0.25);
+}
+
+.bbd-ribbon {
+  display: inline-block;
+  background: #1a1a1a;
+  color: var(--fk-yellow);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  padding: 4px 9px;
+  border-radius: 20px;
+}
+
+.bbd-timer {
+  position: absolute;
+  top: 20px;
+  right: 16px;
+  background: rgba(255,255,255,0.9);
+  color: #1a1a1a;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.bbd-title {
+  white-space: pre-line;
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1.1;
+  color: #1a1a1a;
+  margin-top: 10px;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.bbd-sub {
+  font-size: 12px;
+  font-weight: 800;
+  color: white;
+  margin-top: 6px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.35);
+}
+
+.bbd-cta {
+  margin-top: 12px;
+  background: #1a1a1a;
+  color: var(--fk-yellow);
+  border: none;
+  font-weight: 800;
+  font-size: 12px;
+  padding: 9px 16px;
+  border-radius: 20px;
+}
+
+.bbd-cta.applied {
+  background: var(--tx-green);
+  color: white;
+}
+
 /* ---------- Food mode tabs ---------- */
 .foodmode-tabs {
   display: flex;
@@ -389,6 +459,7 @@ button {
   text-align: left;
   border: none;
   padding: 0;
+  cursor: pointer;
 }
 
 .item-card .ic-img {

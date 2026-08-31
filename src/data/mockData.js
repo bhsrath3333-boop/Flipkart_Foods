@@ -27,7 +27,7 @@ export const OCCASIONS = {
     },
     combo: {
       title: 'Exam Eve Combo',
-      subtitle: 'Coffee + Maggi + Energy bar — curated for all-nighters',
+      subtitle: 'Thali, Maggi & momos — curated for all-nighters',
       itemIds: ['t1', 't4', 'm7'],
     },
   },
@@ -42,7 +42,7 @@ export const OCCASIONS = {
     },
     combo: {
       title: 'Night Shift Combo',
-      subtitle: 'Filter coffee + Biryani — because 2 AM hunger is real',
+      subtitle: 'Filter coffee + a hearty sub — because 2 AM hunger is real',
       itemIds: ['t2', 'm2', 't4'],
     },
   },
@@ -57,7 +57,7 @@ export const OCCASIONS = {
     },
     combo: {
       title: 'Freshers Squad Combo',
-      subtitle: 'Pizza + Sides for the whole hostel wing',
+      subtitle: 'Tacos + Burritos for the whole hostel wing',
       itemIds: ['m5', 'm9', 'm6'],
     },
   },
@@ -72,7 +72,7 @@ export const OCCASIONS = {
     },
     combo: {
       title: 'Farewell Feast Combo',
-      subtitle: 'Biryani + Gulab Jamun — a proper send-off',
+      subtitle: 'Subs + Momos — a proper send-off feast',
       itemIds: ['m2', 'm8', 'm1'],
     },
   },
@@ -93,17 +93,29 @@ export const OCCASIONS = {
   },
 }
 
-// Regular ("Flipkart Foods") menu — normal delivery estimates
+// Real-brand partner styling for the restaurant tiles — colors/initials only (no logos),
+// used purely for the illustrative demo. See BRAND_DISCLAIMER below.
+export const BRANDS = {
+  Subway: { primary: '#009B48', secondary: '#FFC600', text: '#ffffff', initials: 'SW' },
+  "McDonald's": { primary: '#DA291C', secondary: '#FFC72C', text: '#ffffff', initials: 'M' },
+  'Taco Bell': { primary: '#702F8A', secondary: '#E15A97', text: '#ffffff', initials: 'TB' },
+  'Wow! Momo': { primary: '#8B1E3F', secondary: '#FDB813', text: '#ffffff', initials: 'WM' },
+  'California Burrito': { primary: '#F7941D', secondary: '#4CAF50', text: '#ffffff', initials: 'CB' },
+}
+
+export const BRAND_DISCLAIMER = 'Restaurant brand names shown are illustrative examples for this demo prototype only and are not real Flipkart Foods partnerships.'
+
+// Regular ("Flipkart Foods") menu — normal delivery estimates, real-brand demo restaurants
 export const REGULAR_MENU = [
-  { id: 'm1', name: 'Paneer Butter Masala Combo', restaurant: 'Spice Route Kitchen', price: 189, mrp: 220, eta: '35-40 min', rating: 4.3, img: '🍛', tags: ['Bestseller'] },
-  { id: 'm2', name: 'Hyderabadi Chicken Biryani', restaurant: 'Biryani Junction', price: 249, mrp: 280, eta: '40-45 min', rating: 4.5, img: '🍚', tags: ['Bestseller'] },
-  { id: 'm3', name: 'Veg Hakka Noodles', restaurant: 'Wok This Way', price: 149, mrp: 170, eta: '30-35 min', rating: 4.1, img: '🍜', tags: [] },
-  { id: 'm4', name: 'Butter Chicken + Naan', restaurant: 'Spice Route Kitchen', price: 229, mrp: 260, eta: '35-40 min', rating: 4.4, img: '🍗', tags: [] },
-  { id: 'm5', name: 'Farmhouse Pizza (Medium)', restaurant: "Napoli's Pizza Co.", price: 279, mrp: 320, eta: '30-35 min', rating: 4.2, img: '🍕', tags: ['Bestseller'] },
-  { id: 'm6', name: 'Loaded Cheese Fries', restaurant: "Napoli's Pizza Co.", price: 99, mrp: 120, eta: '25-30 min', rating: 4.0, img: '🍟', tags: [] },
-  { id: 'm7', name: 'Protein Bowl (Grilled Chicken)', restaurant: 'FitFuel Meals', price: 199, mrp: 230, eta: '35-40 min', rating: 4.3, img: '🥗', tags: ['Healthy'] },
-  { id: 'm8', name: 'Gulab Jamun (4 pcs)', restaurant: 'Sweet Tooth', price: 79, mrp: 90, eta: '25-30 min', rating: 4.6, img: '🍮', tags: [] },
-  { id: 'm9', name: 'Cheese Burst Burger Meal', restaurant: 'Burger Barracks', price: 159, mrp: 189, eta: '30-35 min', rating: 4.2, img: '🍔', tags: ['Bestseller'] },
+  { id: 'm1', name: '6-inch Veggie Delite Sub', restaurant: 'Subway', price: 149, mrp: 169, eta: '25-30 min', rating: 4.2, img: '🥪', tags: [] },
+  { id: 'm2', name: 'Chicken Teriyaki Sub Combo', restaurant: 'Subway', price: 219, mrp: 249, eta: '30-35 min', rating: 4.4, img: '🥪', tags: ['Bestseller'] },
+  { id: 'm3', name: 'McSpicy Chicken Meal', restaurant: "McDonald's", price: 219, mrp: 249, eta: '25-30 min', rating: 4.5, img: '🍔', tags: ['Bestseller'] },
+  { id: 'm4', name: 'McAloo Tikki Combo', restaurant: "McDonald's", price: 129, mrp: 149, eta: '20-25 min', rating: 4.3, img: '🍔', tags: [] },
+  { id: 'm5', name: 'Crunchy Taco Supreme (2 pc)', restaurant: 'Taco Bell', price: 159, mrp: 179, eta: '30-35 min', rating: 4.1, img: '🌮', tags: ['Bestseller'] },
+  { id: 'm6', name: 'Loaded Nacho Fries', restaurant: 'Taco Bell', price: 139, mrp: 159, eta: '25-30 min', rating: 4.0, img: '🌮', tags: [] },
+  { id: 'm7', name: 'Chicken Steam Momo (10 pc)', restaurant: 'Wow! Momo', price: 139, mrp: 159, eta: '30-35 min', rating: 4.5, img: '🥟', tags: ['Bestseller'] },
+  { id: 'm8', name: 'Peri Peri Fried Momo', restaurant: 'Wow! Momo', price: 149, mrp: 169, eta: '30-35 min', rating: 4.4, img: '🥟', tags: [] },
+  { id: 'm9', name: 'Chicken Burrito Bowl', restaurant: 'California Burrito', price: 229, mrp: 259, eta: '35-40 min', rating: 4.3, img: '🌯', tags: ['Bestseller'] },
 ]
 
 // TiffinX — certified <20-min menu, tighter restricted catalog to make the promise credible
@@ -122,11 +134,11 @@ export const getItemById = (id) => ALL_ITEMS.find((i) => i.id === id)
 
 // Restaurant-partner mock data
 export const RESTAURANT_PROFILE = {
-  name: 'Spice Route Kitchen',
-  cuisine: 'North Indian, Mughlai',
+  name: "McDonald's",
+  cuisine: 'Burgers, Fries & Combos',
   campus: 'IIT Chennai Campus Zone',
   todayOrders: 62,
-  avgPrepTime: '22 min',
+  avgPrepTime: '18 min',
 }
 
 // Historical orders for the forecast chart — last 4 Thursdays, by hour bucket
@@ -171,4 +183,58 @@ export const NUDGES = {
   freshers: { title: 'New here? 👋', body: 'Your hostel wing ordered 12 combos today — join in!' },
   fest: { title: 'Farewell tonight! 🎊', body: 'Group order combos are 15% off for the next 2 hours.' },
   latenight: { title: "It's late ☕", body: "It's 11 PM — your usual late-night coffee order?" },
+}
+
+// On-brand, playful marketing pushes — cycled by the "simulate notification" demo control
+export const MARKETING_NUDGES = [
+  { title: 'Exams over? 🎉', body: 'You survived. Your stomach didn’t.' },
+  { title: '3 PM slump hitting? 😴', body: 'TiffinX gets to you in <20 min.' },
+  { title: "It's 11 PM 🌙", body: 'We know what you’re thinking.' },
+  { title: 'Big Billion Days ka bhi 🛍️', body: 'Khaane ka bhi — grab the ₹1 tasting offer.' },
+  { title: 'Wait... Flipkart bhi? 😲', body: 'Haan bhai, ab khaana bhi Flipkart pe!' },
+  { title: 'Your usual? 🤔', body: 'One tap, zero thinking.' },
+  { title: 'Freshers week special 🎓', body: 'Combos curated just for you.' },
+  { title: 'Rainy day = comfort food day ☔', body: 'Warm bowls, delivered fast.' },
+]
+
+// Simple mock nutrition values per item — illustrative only, not nutritionally precise
+export const NUTRITION = {
+  m1: { cal: 320, protein: 12, carbs: 44 },
+  m2: { cal: 480, protein: 28, carbs: 46 },
+  m3: { cal: 540, protein: 24, carbs: 45 },
+  m4: { cal: 410, protein: 11, carbs: 52 },
+  m5: { cal: 300, protein: 14, carbs: 34 },
+  m6: { cal: 420, protein: 8, carbs: 50 },
+  m7: { cal: 380, protein: 16, carbs: 48 },
+  m8: { cal: 430, protein: 15, carbs: 46 },
+  m9: { cal: 560, protein: 26, carbs: 58 },
+  t1: { cal: 410, protein: 13, carbs: 62 },
+  t2: { cal: 260, protein: 8, carbs: 30 },
+  t3: { cal: 290, protein: 4, carbs: 38 },
+  t4: { cal: 240, protein: 7, carbs: 32 },
+  t5: { cal: 320, protein: 6, carbs: 58 },
+  t6: { cal: 140, protein: 3, carbs: 22 },
+}
+
+// Pre-order time slots (fixed, illustrative) — deliberately anchored to the same
+// 1:00-2:00 PM peak window the restaurant forecast already highlights, so the
+// "X people pre-ordered" panel and the customer pre-order picker stay in sync.
+export const PRE_ORDER_SLOTS = ['12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM']
+
+export const PRE_ORDER_BASE_COUNTS = {
+  '12:30 PM': 9,
+  '1:00 PM': 24,
+  '1:30 PM': 13,
+  '2:00 PM': 7,
+  '2:30 PM': 4,
+}
+
+export const PRE_ORDER_PEAK_SLOT = '1:00 PM'
+export const PRE_ORDER_CAPACITY = 45
+
+// Big Billion Days takeover config
+export const BBD_OFFER = {
+  headline: 'THE BIG\nBILLION DAYS',
+  subline: '₹1 TASTING + FIRST ORDER SUPERCOINS',
+  ribbon: 'LIMITED TIME',
 }

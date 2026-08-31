@@ -1,10 +1,11 @@
 import React, { useMemo, useState } from 'react'
 import { COMMISSION_TIERS, PROMO_RATE_PER_DAY_PER_100, RESTAURANT_PROFILE } from '../../data/mockData'
+import BrandBadge from '../../components/BrandBadge'
 
 const OTHER_RESULTS = [
-  { name: 'Burger Barracks', cuisine: 'American, Fast Food', img: '🍔' },
-  { name: 'Grill & Grind', cuisine: 'American, BBQ', img: '🍖' },
-  { name: 'Patty Palace', cuisine: 'Burgers, Fries', img: '🍟' },
+  { name: 'Subway', cuisine: 'Sandwiches, Subs', img: '🥪' },
+  { name: 'Taco Bell', cuisine: 'Mexican, Tacos', img: '🌮' },
+  { name: 'California Burrito', cuisine: 'Mexican, Burritos', img: '🌯' },
 ]
 
 export default function CommissionPromotion() {
@@ -84,7 +85,7 @@ export default function CommissionPromotion() {
               <div style={{ fontWeight: 700, fontSize: 12.5, marginBottom: 6 }}>Preview: search results for "burger"</div>
               <div className="search-demo-box">
                 <div className="search-result-row promoted">
-                  <span className="srr-img">🍔</span>
+                  <BrandBadge name={RESTAURANT_PROFILE.name} size={28} />
                   <div>
                     <div className="srr-name">{RESTAURANT_PROFILE.name}</div>
                     <div className="srr-cuisine">{RESTAURANT_PROFILE.cuisine}</div>
@@ -93,7 +94,7 @@ export default function CommissionPromotion() {
                 </div>
                 {OTHER_RESULTS.map((r) => (
                   <div className="search-result-row" key={r.name}>
-                    <span className="srr-img">{r.img}</span>
+                    <BrandBadge name={r.name} size={28} />
                     <div>
                       <div className="srr-name">{r.name}</div>
                       <div className="srr-cuisine">{r.cuisine}</div>

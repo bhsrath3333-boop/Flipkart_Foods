@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { FORECAST_HISTORY } from '../../data/mockData'
+import React, { useEffect, useRef, useState } from 'react'
+import { useApp } from '../../state/store'
+import { FORECAST_HISTORY, PRE_ORDER_SLOTS, PRE_ORDER_PEAK_SLOT, PRE_ORDER_CAPACITY } from '../../data/mockData'
 
 function ForecastChart() {
   const maxOrders = Math.max(...FORECAST_HISTORY.hourly.map((h) => h.orders))
@@ -42,32 +43,60 @@ function ForecastChart() {
 }
 
 function LiveDemandPanel() {
-  const [count, setCount] = useState(24)
-  const target = 38
-  const capacity = 45
+  const { preOrderCounts } = useApp()
+  // A small ambient trickle (other campus users ordering) layered on top of
+  // the store's real, customer-driven pre-order counts — kept slow/capped so
+  // a presenter's own pre-order still reads as a clear, immediate jump.
+  const [ambient, setAmbient] = useState(0)
+  const prevPeakRef = useRef(preOrderCounts[PRE_ORDER_PEAK_SLOT])
+  const [justBumped, setJustBumped] = useState(false)
 
   useEffect(() => {
-    if (count >= target) return
-    const t = setTimeout(() => setCount((c) => Math.min(target, c + 1)), 900)
+    if (ambient >= 6) return
+    const t = setTimeout(() => setAmbient((a) => Math.min(6, a + 1)), 6000)
     return () => clearTimeout(t)
-  }, [count])
+  }, [ambient])
 
-  const pct = Math.min(100, (count / capacity) * 100)
+  useEffect(() => {
+    const current = preOrderCounts[PRE_ORDER_PEAK_SLOT]
+    if (current > prevPeakRef.current) {
+      setJustBumped(true)
+      const t = setTimeout(() => setJustBumped(false), 1200)
+      prevPeakRef.current = current
+      return () => clearTimeout(t)
+    }
+    prevPeakRef.current = current
+  }, [preOrderCounts])
+
+  const peakCount = preOrderCounts[PRE_ORDER_PEAK_SLOT] + ambient
+  const pct = Math.min(100, (peakCount / PRE_ORDER_CAPACITY) * 100)
 
   return (
     <div className="live-demand">
       <div style={{ display: 'flex', alignItems: 'center', fontSize: 11.5, fontWeight: 700, color: '#a83c00' }}>
-        <span className="live-dot" /> LIVE · 1:00–2:00 PM slot
+        <span className="live-dot" /> LIVE · {FORECAST_HISTORY.slot}
       </div>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 6 }}>
-        <span className="live-count">{count}</span>
-        <span style={{ fontSize: 12.5, color: '#a83c00', fontWeight: 600 }}>people pre-ordered for this slot</span>
+        <span className={`live-count ${justBumped ? 'coin-pop' : ''}`}>{peakCount}</span>
+        <span style={{ fontSize: 12.5, color: '#a83c00', fontWeight: 600 }}>people pre-ordered for the {PRE_ORDER_PEAK_SLOT} slot</span>
       </div>
       <div className="live-demand-bar">
         <div className="live-demand-bar-fill" style={{ width: `${pct}%` }} />
       </div>
       <div style={{ fontSize: 10.5, color: '#a86200', marginTop: 6 }}>
-        {count}/{capacity} of estimated kitchen capacity for this slot
+        {peakCount}/{PRE_ORDER_CAPACITY} of estimated kitchen capacity for this slot
+      </div>
+
+      <div className="slot-breakdown">
+        {PRE_ORDER_SLOTS.map((s) => (
+          <div key={s} className={`slot-breakdown-item ${s === PRE_ORDER_PEAK_SLOT ? 'peak' : ''}`}>
+            <div className="sbi-count">{preOrderCounts[s] || 0}</div>
+            <div className="sbi-label">{s}</div>
+          </div>
+        ))}
+      </div>
+      <div style={{ fontSize: 9.5, color: '#c07a00', marginTop: 6 }}>
+        🔗 Updates live as customers pick pre-order slots in the app
       </div>
     </div>
   )
