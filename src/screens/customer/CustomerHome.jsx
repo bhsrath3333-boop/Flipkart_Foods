@@ -5,6 +5,7 @@ import ItemCard from '../../components/ItemCard'
 import { OCCASIONS, REGULAR_MENU, TIFFINX_MENU, getItemById, NUDGES, BRAND_DISCLAIMER } from '../../data/mockData'
 import TiffinXInfoModal from './TiffinXInfoModal'
 import BBDBanner from '../../components/BBDBanner'
+import ImageWithFallback from '../../components/ImageWithFallback'
 
 const LOOKING_FOR = [
   { id: 'm1', label: 'Subway', icon: '🥪' },
@@ -51,6 +52,8 @@ export default function CustomerHome() {
 
       <div className="hero-banner" style={{ background: occ.banner.gradient }}>
         <div className="hb-deco">{foodMode === 'tiffinx' ? '⚡' : '🍽️'}</div>
+        <ImageWithFallback key={occasion} basePath={`/images/occasions/${occasion}`} alt="" className="hero-banner-bg" />
+        <div className="hero-banner-overlay" />
         <span className="pill" style={{ position: 'absolute', top: 12, right: 14, background: 'rgba(255,255,255,0.25)', color: 'white' }}>
           🎛️ {occ.label}
         </span>

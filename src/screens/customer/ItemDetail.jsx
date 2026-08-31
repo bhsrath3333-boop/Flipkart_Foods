@@ -4,6 +4,7 @@ import { ScreenHeader } from '../../components/TopBars'
 import { getItemById, NUTRITION } from '../../data/mockData'
 import TiffinXInfoModal from './TiffinXInfoModal'
 import BrandBadge from '../../components/BrandBadge'
+import ImageWithFallback from '../../components/ImageWithFallback'
 
 export default function ItemDetail({ id }) {
   const { cart, addToCart, push } = useApp()
@@ -20,7 +21,13 @@ export default function ItemDetail({ id }) {
       <ScreenHeader title={item.name} tiffinx={isTx} />
       <div className="detail-hero">
         {isTx && <span className="certified-badge" style={{ top: 12, left: 12 }}>⚡ &lt;20-MIN CERTIFIED</span>}
-        {item.img}
+        <ImageWithFallback
+          key={item.id}
+          basePath={`/images/menu/${item.id}`}
+          alt={item.name}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          fallback={item.img}
+        />
       </div>
       <div className="detail-body">
         <h2>{item.name}</h2>

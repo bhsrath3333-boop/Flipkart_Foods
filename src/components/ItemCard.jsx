@@ -3,6 +3,7 @@ import { useApp } from '../state/store'
 import { BRANDS } from '../data/mockData'
 import BrandBadge from './BrandBadge'
 import NutritionPopover from './NutritionPopover'
+import ImageWithFallback from './ImageWithFallback'
 
 export default function ItemCard({ item }) {
   const { cart, addToCart, push } = useApp()
@@ -23,7 +24,13 @@ export default function ItemCard({ item }) {
         {item.certified && (
           <span className="certified-badge">⚡ &lt;20-MIN CERTIFIED</span>
         )}
-        {item.img}
+        <ImageWithFallback
+          key={item.id}
+          basePath={`/images/menu/${item.id}`}
+          alt={item.name}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          fallback={item.img}
+        />
       </div>
       <div className="ic-body">
         <div className="ic-name">{item.name}</div>
